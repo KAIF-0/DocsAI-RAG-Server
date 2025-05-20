@@ -14,7 +14,7 @@ import json
 # Load environment variables from .env file
 load_dotenv()
 
-Set your Google API key here
+# Set your Google API key here
 os.environ["GOOGLE_API_KEY"] = "AIzaSyCFbB1b_OcOBF4ghDs-xepojnV7f1pc_bg"  # Replace with your actual API key
 
 def main(context):
