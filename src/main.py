@@ -34,10 +34,27 @@ def main(context):
 
     # post request for AI responses
     if context.req.method == "POST" and context.req.path == "/get-response":
+        print("Received POST request")
+        print(f"Request data type: {type(context.req.data)}")
+        print(f"Request data: {context.req.data}")
+        
         data = context.req.data
-        json_data = json.loads(data)
+        if isinstance(data, str):
+            json_data = json.loads(data)
+        else:
+            json_data = data
+            
+        print(f"JSON data type: {type(json_data)}")
+        print(f"JSON data: {json_data}")
+        
         query = json_data["query"]
-        vectordb = feed_documents_to_faiss(json_data["docs"])
+        print(f"Query: {query}")
+        
+        docs = json_data["docs"]
+        print(f"Docs type: {type(docs)}")
+        print(f"Docs: {docs}")
+        
+        vectordb = feed_documents_to_faiss(docs)
         response = get_ai_response_from_faiss(vectordb, query)
         return context.res.json({"response": response})
 
