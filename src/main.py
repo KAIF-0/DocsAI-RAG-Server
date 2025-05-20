@@ -33,12 +33,18 @@ def main(context):
         context.error("Could not list users: " + repr(err))
 
     # post request for AI responses
-    if context.req.method == "POST" and context.req.path == "/get-response":
-        data = context.req.data
-        json_data = json.loads(data)
-        query = json_data["query"]
-        vectordb = feed_documents_to_faiss(json_data["docs"])
-        response = get_ai_response_from_faiss(vectordb, query)
+    # if context.req.method == "POST" and context.req.path == "/get-response":
+    #     data = context.req.data
+    #     json_data = json.loads(data)
+    #     query = json_data["query"]
+    #     vectordb = feed_documents_to_faiss(json_data["docs"])
+    #     response = get_ai_response_from_faiss(vectordb, query)
+    #     return context.res.json({"response": response})
+
+    if(context.req.path == "/test"):
+        vectordb = feed_documents_to_faiss("AI embeddings are numerical representations of data—typically text, images, or other complex objects—converted into high-dimensional vectors. These vectors capture the semantic meaning or context of the data in a way that machines can process. Here's a concise breakdown:What They Are: Embeddings are dense vectors (e.g., [0.23, -0.15, 0.67, ...]) where each dimension represents a learned feature of the data. For text, they encode semantic relationships, so similar concepts (e.g., dog and puppy) have similar vectors.How They're Created: AI models, like Google's embedding-001 or OpenAI's text-embedding models, are trained on large datasets to map data to vectors. These models learn patterns (e.g., word relationships) during training, often using neural networks")
+        print("Feeding documents to FAISS completed.")
+        response = get_ai_response_from_faiss(vectordb, "How AI embeddings are created?")
         return context.res.json({"response": response})
 
     return context.res.json(
