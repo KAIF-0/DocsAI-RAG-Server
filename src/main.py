@@ -83,11 +83,13 @@ def get_ai_response_from_faiss(vectordb, query):
     response = llm.invoke(prompt)
     return response.content
 
-# def test():
+def test():
     
-#     vectordb = feed_documents_to_faiss("AI embeddings are numerical representations of data—typically text, images, or other complex objects—converted into high-dimensional vectors. These vectors capture the semantic meaning or context of the data in a way that machines can process. Here's a concise breakdown:What They Are: Embeddings are dense vectors (e.g., [0.23, -0.15, 0.67, ...]) where each dimension represents a learned feature of the data. For text, they encode semantic relationships, so similar concepts (e.g., dog and puppy) have similar vectors.How They're Created: AI models, like Google's embedding-001 or OpenAI's text-embedding models, are trained on large datasets to map data to vectors. These models learn patterns (e.g., word relationships) during training, often using neural networks")
-#     print("Feeding documents to FAISS completed.")
-#     response = get_ai_response_from_faiss(vectordb, "How AI embeddings are created?")
-#     print(response)
+    vectordb = feed_documents_to_faiss("Artificial Intelligence (AI) is a technology that enables machines to perform tasks that typically require human intelligence, such as recognizing images, writing poems, and making data-based predictions. It involves developing systems that can learn from data, identify patterns, and make decisions or predictions with minimal human intervention.")
+    print("Feeding documents to FAISS completed.")
+    response = get_ai_response_from_faiss(vectordb, "What us AI in simple word in 3 lines")
+    print(
+        "**----------ANSWER----------** \n" + response
+    )
 
-# test()   
+test()   
