@@ -13,9 +13,7 @@ import json
 
 # Load environment variables from .env file
 load_dotenv()
-
-# Set your Google API key here
-os.environ["GOOGLE_API_KEY"] = "AIzaSyCFbB1b_OcOBF4ghDs-xepojnV7f1pc_bg"  # Replace with your actual API key
+  # Replace with your actual API key
 
 def main(context):
     client = (
@@ -42,7 +40,8 @@ def main(context):
             response = get_ai_response_from_faiss(vectordb, query)
             return context.res.json({"response": response})
         except Exception as e:
-            return context.res.error(str(e), code=500)
+            error_message = str(e) if isinstance(e, Exception) else "An unknown error occurred"
+            return context.res.json({"error": error_message}, 500)
 
     return context.res.json(
         {
