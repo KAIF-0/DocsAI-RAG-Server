@@ -7,15 +7,15 @@ from langchain.text_splitter import CharacterTextSplitter
 from langchain.vectorstores import FAISS
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_core.documents import Document
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 import os
-import json
+# import json
 
 # Load environment variables from .env file
-load_dotenv()
+# load_dotenv()
 
 # Set your Google API key here
-os.environ["GOOGLE_API_KEY"] = "AIzaSyCFbB1b_OcOBF4ghDs-xepojnV7f1pc_bg"  # Replace with your actual API key
+# os.environ["GOOGLE_API_KEY"] = "AIzaSyCFbB1b_OcOBF4ghDs-xepojnV7f1pc_bg"  # Replace with your actual API key
 
 def main(context):
     client = (
