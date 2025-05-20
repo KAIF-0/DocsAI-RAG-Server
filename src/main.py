@@ -32,33 +32,14 @@ def main(context):
     except AppwriteException as err:
         context.error("Could not list users: " + repr(err))
 
-        # post request for AI responses
+    # post request for AI responses
     if context.req.method == "POST" and context.req.path == "/get-response":
-        try:
-            context.log("Received POST request to /get-response")
-            data = context.req.data
-            context.log(f"Request data: {data}")
-            
-            json_data = json.loads(data)
-            query = json_data["query"]
-            context.log(f"Query: {query}")
-            
-            vectordb = feed_documents_to_faiss(json_data["docs"])
-            context.log("Documents processed by FAISS")
-            
-            response = get_ai_response_from_faiss(vectordb, query)
-            context.log("Generated AI response")
-            
-            return context.res.json({"response": response})
-        except json.JSONDecodeError as e:
-            context.error(f"JSON parsing error: {str(e)}")
-            return context.res.json({"error": "Invalid JSON format"}, 400)
-        except KeyError as e:
-            context.error(f"Missing required field: {str(e)}")
-            return context.res.json({"error": f"Missing required field: {str(e)}"}, 400)
-        except Exception as e:
-            context.error(f"Error processing request: {str(e)}")
-            return context.res.json({"error": str(e)}, 500)
+        data = context.req.data
+        json_data = json.loads(data)
+        query = json_data["query"]
+        vectordb = feed_documents_to_faiss(json_data["docs"])
+        response = get_ai_response_from_faiss(vectordb, query)
+        return context.res.json({"response": response})
 
     return context.res.json(
         {
@@ -68,7 +49,6 @@ def main(context):
 
 
 def feed_documents_to_faiss(docs):
-    # Convert string to Document if needed
     if isinstance(docs, str):
         docs = [Document(page_content=docs)]
     
