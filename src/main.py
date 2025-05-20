@@ -13,7 +13,9 @@ import json
 
 # Load environment variables from .env file
 load_dotenv()
-  # Replace with your actual API key
+
+# Set your Google API key here
+# os.environ["GOOGLE_API_KEY"] = "AIzaSyCFbB1b_OcOBF4ghDs-xepojnV7f1pc_bg"  # Replace with your actual API key
 
 def main(context):
     client = (
@@ -33,15 +35,30 @@ def main(context):
         # post request for AI responses
     if context.req.method == "POST" and context.req.path == "/get-response":
         try:
+            context.log("Received POST request to /get-response")
             data = context.req.data
+            context.log(f"Request data: {data}")
+            
             json_data = json.loads(data)
             query = json_data["query"]
+            context.log(f"Query: {query}")
+            
             vectordb = feed_documents_to_faiss(json_data["docs"])
+            context.log("Documents processed by FAISS")
+            
             response = get_ai_response_from_faiss(vectordb, query)
+            context.log("Generated AI response")
+            
             return context.res.json({"response": response})
+        except json.JSONDecodeError as e:
+            context.error(f"JSON parsing error: {str(e)}")
+            return context.res.json({"error": "Invalid JSON format"}, 400)
+        except KeyError as e:
+            context.error(f"Missing required field: {str(e)}")
+            return context.res.json({"error": f"Missing required field: {str(e)}"}, 400)
         except Exception as e:
-            error_message = str(e) if isinstance(e, Exception) else "An unknown error occurred"
-            return context.res.json({"error": error_message}, 500)
+            context.error(f"Error processing request: {str(e)}")
+            return context.res.json({"error": str(e)}, 500)
 
     return context.res.json(
         {
