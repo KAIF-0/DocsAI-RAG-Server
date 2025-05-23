@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "build": "tsc",
-    "start": "NODE_OPTIONS='--loader ts-node/esm' node server.ts",
-    "dev": "nodemon --exec 'NODE_OPTIONS=\"--loader ts-node/esm\" node' server.ts"
+    "start": "node --loader ts-node/esm server.ts",
+    "dev": "nodemon --exec \"node --loader ts-node/esm\" server.ts"
   },
   "ts-node": {
     "esm": true,
@@ -28,6 +28,7 @@
   },
   "devDependencies": {
     "@types/cors": "^2.8.18",
+    "@types/dotenv": "^6.1.1",
     "@types/express": "^4.17.21",
     "@types/node": "^20.11.19",
     "@types/redis": "^4.0.11",

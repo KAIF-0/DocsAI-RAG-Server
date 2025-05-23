@@ -1,4 +1,4 @@
-import dotenv from "dotenv";
+import * as dotenv from "dotenv";
 import express from "express";
 import feedDocumentsToFaiss from "./helpers/feedDocs.js";
 import getAIResponseFromFaiss from "./helpers/getResponse.js";
@@ -36,7 +36,7 @@ app.get("/", (req, res) => {
   res.json({ response: "Hello from Docs AI RAG Node.js Server!" });
 });
 
-chatRedisClient.on("error", async (err) => {
+chatRedisClient.on("error", async (err: Error) => {
   console.error("CHAT REDIS ERROR:", err);
 
   //disconnect first before reconnecting
