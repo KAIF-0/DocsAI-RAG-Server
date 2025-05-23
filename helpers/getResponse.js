@@ -1,5 +1,5 @@
-import { FaissStore } from "@langchain/community/vectorstores/faiss";
-import { Document } from "@langchain/core/documents";
+import { FaissStore } from "langchain/vectorstores/faiss";
+import { Document } from "langchain/document";
 import { genAI } from "../server.js";
 import { generatePrompt } from "./generatePromt.js";
 

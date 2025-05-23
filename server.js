@@ -10,13 +10,13 @@ import { generatePrompt } from "./helpers/generatePromt.js";
 config();
 
 const app = express();
-app.use(express.json());
+app.use(express.json()); 
 
 app.use(
   cors({
     origin: process.env.SCRAPPING_SERVER_URL,
     methods: ["GET", "POST"],
-  })
+  }) 
 );
 
 //google genAI config
