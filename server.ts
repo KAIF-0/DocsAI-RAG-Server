@@ -5,6 +5,9 @@ import getAIResponseFromFaiss from "./helpers/getResponse.js";
 import getDocsFromRedis, { chatRedisClient } from "./helpers/redis.js";
 import cors from "cors";
 
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import { generatePrompt } from "./helpers/generatePromt.js";
+
 dotenv.config();
 
 const app = express();
@@ -16,6 +19,9 @@ app.use(
     methods: ["GET", "POST"],
   })
 );
+
+//google genAI config
+export const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY || "");
 
 await chatRedisClient
   .connect()
@@ -55,13 +61,22 @@ app.post("/getResponse", async (req, res) => {
   try {
     const { query, key, url } = req.body;
     const docs = await getDocsFromRedis(key);
-    if (!docs) {
-      throw new Error("No documents found");
+    let response;
+
+    //if docs are found, RAG model is used
+    if (docs) {
+      const vectordb = await feedDocumentsToFaiss(docs);
+      response = await getAIResponseFromFaiss(vectordb, query, url, key);
+    } else {
+      const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+      const prompt = generatePrompt(query, url, key);
+      const result = await model.generateContent(prompt);
+      response = result.response.text();
     }
-    const vectordb = await feedDocumentsToFaiss(docs);
-    const response = await getAIResponseFromFaiss(vectordb, query, url, key);
+
     res.json({ response });
   } catch (error) {
+    console.log(error);
     const errorMessage =
       error instanceof Error ? error.message : "Internal Server Error!";
     res.status(500).json({ error: errorMessage });

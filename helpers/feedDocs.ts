@@ -3,7 +3,7 @@ import { FaissStore } from "@langchain/community/vectorstores/faiss";
 import { GoogleGenerativeAIEmbeddings } from "@langchain/google-genai";
 
 export default async function feedDocumentsToFaiss(
-  docs: string
+  docs: string = "No docs provided!"
 ): Promise<FaissStore> {
   try {
     const textSplitter = new RecursiveCharacterTextSplitter({
