@@ -5,8 +5,13 @@
   "main": "server.ts",
   "type": "module",
   "scripts": {
-    "start": "node --loader ts-node/esm server.ts",
-    "dev": "nodemon --exec 'node --loader ts-node/esm' server.ts"
+    "build": "tsc",
+    "start": "NODE_OPTIONS='--loader ts-node/esm' node server.ts",
+    "dev": "nodemon --exec 'NODE_OPTIONS=\"--loader ts-node/esm\" node' server.ts"
+  },
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node"
   },
   "dependencies": {
     "@google/generative-ai": "^0.2.0",
