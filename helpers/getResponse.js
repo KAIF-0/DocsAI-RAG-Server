@@ -1,9 +1,7 @@
-import dotenv from "dotenv";
-import { FaissStore } from "langchain/vectorstores/faiss";
-import { Document } from "langchain/document";
+import { FaissStore } from "@langchain/community/vectorstores/faiss";
+import { Document } from "@langchain/core/documents";
 import { genAI } from "../server.js";
 import { generatePrompt } from "./generatePromt.js";
-dotenv.config();
 
 export default async function getAIResponseFromFaiss(
   vectordb,
@@ -19,9 +17,7 @@ export default async function getAIResponseFromFaiss(
 
     const relevantDocs = await retriever.getRelevantDocuments(query);
 
-    const context = relevantDocs
-      .map((doc) => doc.pageContent)
-      .join("\n\n");
+    const context = relevantDocs.map((doc) => doc.pageContent).join("\n\n");
     const prompt = generatePrompt(query, url, key, context);
 
     const result = await model.generateContent(prompt);
@@ -32,4 +28,3 @@ export default async function getAIResponseFromFaiss(
     throw new Error("Error in getting AI Response: " + errorMessage);
   }
 }
-

@@ -1,10 +1,8 @@
-import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
-import { FaissStore } from "langchain/vectorstores/faiss";
+import { RecursiveCharacterTextSplitter } from "@langchain/textsplitters";
+import { FaissStore } from "@langchain/community/vectorstores/faiss";
 import { GoogleGenerativeAIEmbeddings } from "@langchain/google-genai";
 
-export default async function feedDocumentsToFaiss(
-  docs = "No docs provided!"
-) {
+export default async function feedDocumentsToFaiss(docs) {
   try {
     const textSplitter = new RecursiveCharacterTextSplitter({
       chunkSize: 1000,
