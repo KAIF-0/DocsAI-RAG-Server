@@ -4,7 +4,6 @@ import feedDocumentsToFaiss from "./helpers/feedDocs.js";
 import getAIResponseFromFaiss from "./helpers/getResponse.js";
 import { getDocsFromRedis, chatRedisClient } from "./helpers/redis.js";
 import cors from "cors";
-
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { generatePrompt } from "./helpers/generatePromt.js";
 
