@@ -28,7 +28,7 @@ await chatRedisClient
   .then(() => {
     console.log("CHAT REDIS INSTANCE CONNECTED!");
   })
-  .catch((err) => {
+  .catch((err: Error) => {
     console.log("CHAT REDIS ERROR: ", err);
   });
 

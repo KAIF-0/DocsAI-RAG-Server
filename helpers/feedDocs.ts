@@ -1,5 +1,5 @@
-import { RecursiveCharacterTextSplitter } from "@langchain/textsplitters";
-import { FaissStore } from "@langchain/community/vectorstores/faiss";
+import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
+import { FaissStore } from "langchain/vectorstores/faiss";
 import { GoogleGenerativeAIEmbeddings } from "@langchain/google-genai";
 
 export default async function feedDocumentsToFaiss(
