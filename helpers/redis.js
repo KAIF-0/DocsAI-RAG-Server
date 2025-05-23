@@ -7,7 +7,7 @@ export const chatRedisClient = createClient({
   url: process.env.REDIS_CHAT_INSTANCE_URL,
 });
 
-export default async function getDocsFromRedis(key: string): Promise<string> {
+export const getDocsFromRedis = async (key) => {
   try {
     const result = await chatRedisClient.get(key);
     return result || "";
@@ -16,4 +16,4 @@ export default async function getDocsFromRedis(key: string): Promise<string> {
       error instanceof Error ? error.message : "Unknown error occurred";
     throw new Error("Error in getting data from Redis: " + errorMessage);
   }
-}
+};

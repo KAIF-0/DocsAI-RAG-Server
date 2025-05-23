@@ -1,9 +1,4 @@
-export const generatePrompt = (
-  query: string,
-  url: string,
-  key: string,
-  context: string = ""
-) => {
+export const generatePrompt = (query, url, key, context = "") => {
   return context !== ""
     ? `This is my documentation site URL: ${url} and its name: ${key}. Please answer the question: "${query}". 
 

@@ -1,8 +1,8 @@
-import * as dotenv from "dotenv";
+import dotenv from "dotenv";
 import express from "express";
 import feedDocumentsToFaiss from "./helpers/feedDocs.js";
 import getAIResponseFromFaiss from "./helpers/getResponse.js";
-import getDocsFromRedis, { chatRedisClient } from "./helpers/redis.js";
+import { getDocsFromRedis, chatRedisClient } from "./helpers/redis.js";
 import cors from "cors";
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
@@ -23,12 +23,12 @@ app.use(
 //google genAI config
 export const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY || "");
 
-await chatRedisClient
+chatRedisClient
   .connect()
   .then(() => {
     console.log("CHAT REDIS INSTANCE CONNECTED!");
   })
-  .catch((err: Error) => {
+  .catch((err) => {
     console.log("CHAT REDIS ERROR: ", err);
   });
 
@@ -36,7 +36,7 @@ app.get("/", (req, res) => {
   res.json({ response: "Hello from Docs AI RAG Node.js Server!" });
 });
 
-chatRedisClient.on("error", async (err: Error) => {
+chatRedisClient.on("error", async (err) => {
   console.error("CHAT REDIS ERROR:", err);
 
   //disconnect first before reconnecting

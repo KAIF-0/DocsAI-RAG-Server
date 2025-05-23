@@ -2,23 +2,19 @@
   "name": "rag-node-server",
   "version": "1.0.0",
   "description": "RAG server using Node.js",
-  "main": "server.ts",
+  "main": "server.js",
   "type": "module",
   "scripts": {
     "build": "tsc",
-    "start": "node --loader ts-node/esm server.ts",
-    "dev": "nodemon --exec \"node --loader ts-node/esm\" server.ts"
-  },
-  "ts-node": {
-    "esm": true,
-    "experimentalSpecifierResolution": "node"
+    "start": "node server.js",
+    "dev": "nodemon --exec \"node\" server.js"
   },
   "dependencies": {
-    "@google/generative-ai": "^0.2.0",
-    "@langchain/community": "^0.0.34",
-    "@langchain/core": "^0.1.48",
-    "@langchain/google-genai": "^0.0.12",
-    "@langchain/textsplitters": "^0.0.1",
+    "google/generative-ai": "^0.2.0",
+    "langchain/community": "^0.0.34",
+    "langchain/core": "^0.1.48",
+    "langchain/google-genai": "^0.0.12",
+    "langchain/textsplitters": "^0.0.1",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
@@ -27,11 +23,11 @@
     "redis": "^4.7.1"
   },
   "devDependencies": {
-    "@types/cors": "^2.8.18",
-    "@types/dotenv": "^6.1.1",
-    "@types/express": "^4.17.21",
-    "@types/node": "^20.11.19",
-    "@types/redis": "^4.0.11",
+    "types/cors": "^2.8.18",
+    "types/dotenv": "^6.1.1",
+    "types/express": "^4.17.21",
+    "types/node": "^20.11.19",
+    "types/redis": "^4.0.11",
     "nodemon": "^3.0.3",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"

@@ -3,8 +3,8 @@ import { FaissStore } from "langchain/vectorstores/faiss";
 import { GoogleGenerativeAIEmbeddings } from "@langchain/google-genai";
 
 export default async function feedDocumentsToFaiss(
-  docs: string = "No docs provided!"
-): Promise<FaissStore> {
+  docs = "No docs provided!"
+) {
   try {
     const textSplitter = new RecursiveCharacterTextSplitter({
       chunkSize: 1000,
@@ -17,7 +17,7 @@ export default async function feedDocumentsToFaiss(
     });
 
     return await FaissStore.fromTexts(chunks, [], embeddings);
-  } catch (error: unknown) {
+  } catch (error) {
     const errorMessage =
       error instanceof Error ? error.message : "Unknown error occurred";
     throw new Error("Error in feedDocumentsToFaiss: " + errorMessage);
