@@ -12,8 +12,6 @@ export const getDocsFromRedis = async (key) => {
     const result = await chatRedisClient.get(key);
     return result || "";
   } catch (error) {
-    const errorMessage =
-      error instanceof Error ? error.message : "Unknown error occurred";
-    throw new Error("Error in getting data from Redis: " + errorMessage);
+    throw new Error("Error in getting data from Redis: " + error);
   }
 };

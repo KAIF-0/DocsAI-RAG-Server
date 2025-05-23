@@ -23,8 +23,6 @@ export default async function getAIResponseFromFaiss(
     const result = await model.generateContent(prompt);
     return result.response.text();
   } catch (error) {
-    const errorMessage =
-      error instanceof Error ? error.message : "Unknown error occurred";
-    throw new Error("Error in getting AI Response: " + errorMessage);
+    throw new Error("Error in getting AI Response: " + error);
   }
 }

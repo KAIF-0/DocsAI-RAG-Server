@@ -16,8 +16,6 @@ export default async function feedDocumentsToFaiss(docs) {
 
     return await FaissStore.fromTexts(chunks, [], embeddings);
   } catch (error) {
-    const errorMessage =
-      error instanceof Error ? error.message : "Unknown error occurred";
-    throw new Error("Error in feedDocumentsToFaiss: " + errorMessage);
+    throw new Error("Error in feedDocumentsToFaiss: " + error);
   }
 }
