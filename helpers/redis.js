@@ -1,7 +1,7 @@
 import { createClient } from "redis";
-import * as dotenv from "dotenv";
+import { config } from "dotenv";
 
-dotenv.config();
+config();
 // console.log(process.env.REDIS_CHAT_INSTANCE_URL);
 export const chatRedisClient = createClient({
   url: process.env.REDIS_CHAT_INSTANCE_URL,

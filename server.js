@@ -1,4 +1,4 @@
-import dotenv from "dotenv";
+import { config } from "dotenv";
 import express from "express";
 import feedDocumentsToFaiss from "./helpers/feedDocs.js";
 import getAIResponseFromFaiss from "./helpers/getResponse.js";
@@ -8,7 +8,7 @@ import cors from "cors";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { generatePrompt } from "./helpers/generatePromt.js";
 
-dotenv.config();
+config();
 
 const app = express();
 app.use(express.json());
