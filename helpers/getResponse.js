@@ -18,6 +18,7 @@ export default async function getAIResponseFromFaiss(
     const relevantDocs = await retriever.getRelevantDocuments(query);
 
     const context = relevantDocs.map((doc) => doc.pageContent).join("\n\n");
+    console.log(context);
     const prompt = generatePrompt(query, url, key, context);
 
     const result = await model.generateContent(prompt);
