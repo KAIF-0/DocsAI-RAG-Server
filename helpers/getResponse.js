@@ -12,7 +12,7 @@ export default async function getAIResponseFromFaiss(
   try {
     const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
     const retriever = vectordb.asRetriever({
-      searchKwargs: { fetchK: 10 },
+      searchKwargs: { fetchK: 5 },
     });
 
     const relevantDocs = await retriever.getRelevantDocuments(query);
