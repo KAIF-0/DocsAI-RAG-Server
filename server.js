@@ -10,13 +10,13 @@ import { generatePrompt } from "./helpers/generatePromt.js";
 config();
 
 const app = express();
-app.use(express.json()); 
+app.use(express.json());
 
 app.use(
   cors({
     origin: process.env.SCRAPPING_SERVER_URL,
     methods: ["GET", "POST"],
-  }) 
+  })
 );
 
 //google genAI config
@@ -76,9 +76,7 @@ app.post("/getResponse", async (req, res) => {
     res.json({ response });
   } catch (error) {
     console.log(error);
-    const errorMessage =
-      error instanceof Error ? error.message : "Internal Server Error!";
-    res.status(500).json({ error: errorMessage });
+    res.status(500).json({ success: false, error: error.message });
   }
 });
 
