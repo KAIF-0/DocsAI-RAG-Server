@@ -20,8 +20,6 @@
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
-    "@langchain/community": "^0.0.34",
-    "@langchain/core": "^0.2.21",
     "@langchain/google-genai": "^0.0.12",
     "@langchain/textsplitters": "^0.0.1",
     "cors": "^2.8.5",
