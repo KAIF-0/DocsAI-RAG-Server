@@ -1,11 +1,11 @@
 import { config } from "dotenv";
 import express from "express";
 import feedDocumentsToFaiss from "./helpers/feedDocs.js";
-import getAIResponseFromFaiss from "./helpers/getResponse.js";
 import { getDocsFromRedis, chatRedisClient } from "./helpers/redis.js";
 import cors from "cors";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { generatePrompt } from "./helpers/generatePromt.js";
+import getAIResponseFromVectorStore from "./helpers/getResponse.js";
 
 config();
 
@@ -59,19 +59,9 @@ chatRedisClient.on("error", async (err) => {
 app.post("/getResponse", async (req, res) => {
   try {
     const { query, key, url } = req.body;
-    const docs = await getDocsFromRedis(key);
-    let response;
 
     //if docs are found, RAG model is used
-    if (docs) {
-      const vectordb = await feedDocumentsToFaiss(docs);
-      response = await getAIResponseFromFaiss(vectordb, query, url, key);
-    } else {
-      const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-      const prompt = generatePrompt(query, url, key);
-      const result = await model.generateContent(prompt);
-      response = result.response.text();
-    }
+    const response = await getAIResponseFromVectorStore(query, url, key);
 
     res.json({ response });
   } catch (error) {
@@ -80,5 +70,30 @@ app.post("/getResponse", async (req, res) => {
   }
 });
 
+app.post("/feedDocs", async (req, res) => {
+  try {
+    const { key } = req.body;
+    const docs = await getDocsFromRedis(key);
+
+    //if docs are found, RAG model is used
+    if (docs) {
+      await feedDocumentsToFaiss(docs, key);
+    }
+
+    res
+      .json({
+        success: true,
+        message: "Docs embeddings successfully stored in Vector Store!",
+      })
+      .status(200);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 const PORT = process.env.PORT || 5000;
 export default app;
+// app.listen(PORT, () => {
+//   console.log(`Server is running on port ${PORT}`);
+// });

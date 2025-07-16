@@ -1,24 +1,23 @@
-import { FaissStore } from "langchain/vectorstores/faiss";
-import { Document } from "langchain/document";
 import { genAI } from "../server.js";
 import { generatePrompt } from "./generatePromt.js";
+import { index } from "../configs/vector.js";
 
-export default async function getAIResponseFromFaiss(
-  vectordb,
-  query,
-  url,
-  key
-) {
+export default async function getAIResponseFromVectorStore(query, url, key) {
   try {
     const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-    const retriever = vectordb.asRetriever({
-      searchKwargs: { fetchK: 5 },
-    });
+    const retrievedData = await index.query(
+      {
+        data: query,
+        topK: 2,
+        includeData: true,
+      },
+      {
+        namespace: key,
+      }
+    );
 
-    const relevantDocs = await retriever.getRelevantDocuments(query);
-
-    const context = relevantDocs.map((doc) => doc.pageContent).join("\n\n");
-    console.log(context);
+    const context = retrievedData.map((data) => data.data);
+    // console.log(retrievedData);
     const prompt = generatePrompt(query, url, key, context);
 
     const result = await model.generateContent(prompt);
