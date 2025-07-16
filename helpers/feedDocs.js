@@ -1,6 +1,8 @@
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 import { index } from "../configs/vector.js";
 
+const BATCH_SIZE = 500;
+
 export default async function feedDocumentsToFaiss(docs, key) {
   try {
     await cleanIndex(key);
@@ -34,9 +36,11 @@ export default async function feedDocumentsToFaiss(docs, key) {
       });
     }
 
-    await index.upsert(chunkedDocs, {
-      namespace: key,
-    });
+    //fix: batch size error
+    for (let i = 0; i < chunkedDocs.length; i += BATCH_SIZE) {
+      const batch = chunkedDocs.slice(i, i + BATCH_SIZE);
+      await index.upsert(batch, { namespace: key });
+    }
 
     console.log("Documents indexed successfully!");
 
