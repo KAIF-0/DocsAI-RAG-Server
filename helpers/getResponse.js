@@ -4,7 +4,7 @@ import { index } from "../configs/vector.js";
 
 export default async function getAIResponseFromVectorStore(query, url, key) {
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
     const retrievedData = await index.query(
       {
         data: query,
