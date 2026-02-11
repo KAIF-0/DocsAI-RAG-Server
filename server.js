@@ -91,7 +91,7 @@ app.post("/feedDocs", async (req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
-export default app;
-// app.listen(PORT, () => {
-//   console.log(`Server is running on port ${PORT}`);
-// });
+// export default app;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});

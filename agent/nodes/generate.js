@@ -1,13 +1,5 @@
-import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { HumanMessage, SystemMessage } from "@langchain/core/messages";
-import { config } from "dotenv";
-
-config();
-
-const model = new ChatGoogleGenerativeAI({
-  model: "gemini-2.5-flash-lite", 
-  temperature: 0.3
-});
+import { model } from "../../configs/gemini.js";
 
 export const generateNode = async (state) => {
   const { question, context, url, key } = state;
