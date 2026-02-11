@@ -20,16 +20,15 @@
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
-    "@langchain/core": "^1.1.22",
-    "@langchain/google-genai": "^2.1.7",
-    "@langchain/langgraph": "^1.1.4",
+    "@langchain/google-genai": "latest",
+    "@langchain/langgraph": "latest",
     "@langchain/textsplitters": "^1.0.1",
     "@upstash/vector": "^1.2.2",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "faiss-node": "^0.5.1",
-    "langchain": "^1.2.7",
+    "langchain": "latest",
     "redis": "^4.7.1"
   }
 }
