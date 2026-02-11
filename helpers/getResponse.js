@@ -1,28 +1,16 @@
-import { genAI } from "../server.js";
-import { generatePrompt } from "./generatePromt.js";
-import { index } from "../configs/vector.js";
+import { graph } from "../agent/graph.js";
 
-export default async function getAIResponseFromVectorStore(query, url, key) {
+export default async function getAIResponse(query, url, key) {
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
-    const retrievedData = await index.query(
-      {
-        data: query,
-        topK: 2,
-        includeData: true,
-      },
-      {
-        namespace: key,
-      }
-    );
-
-    const context = retrievedData.map((data) => data.data);
-    // console.log(retrievedData);
-    const prompt = generatePrompt(query, url, key, context);
-
-    const result = await model.generateContent(prompt);
-    return result.response.text();
-  } catch (error) {
-    throw new Error("Error in getting AI Response: " + error);
-  }
+      const result = await graph.invoke({
+        question: query,
+        key: key,
+        url: url, 
+      });
+      
+      return result.answer;
+    } catch (error) {
+      console.error("Agent invocation failed:", error);
+      return "Sorry, something went wrong while processing your request.";
+    }
 }

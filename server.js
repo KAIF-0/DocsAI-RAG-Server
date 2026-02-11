@@ -4,8 +4,7 @@ import feedDocumentsToFaiss from "./helpers/feedDocs.js";
 import { getDocsFromRedis, chatRedisClient } from "./helpers/redis.js";
 import cors from "cors";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { generatePrompt } from "./helpers/generatePromt.js";
-import getAIResponseFromVectorStore from "./helpers/getResponse.js";
+import getAIResponse from "./helpers/getResponse.js";
 
 config();
 
@@ -60,8 +59,7 @@ app.post("/getResponse", async (req, res) => {
   try {
     const { query, key, url } = req.body;
 
-    //if docs are found, RAG model is used
-    const response = await getAIResponseFromVectorStore(query, url, key);
+    const response = await getAIResponse(query, url, key);
 
     res.json({ response });
   } catch (error) {
